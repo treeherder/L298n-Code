@@ -8,7 +8,7 @@ This is just for one side
 
 (You may need to purchase some M-F Connectors to connect to the board's headers)
 
-int EnablePin = 9;  // This is the E1 or E2 pin on the DFRobot Board 
+int EnablePin = 9;  // This is the "E1" or "E2" pin on the DFRobot Board 
 int DirectionPin = 10; //this is the "M1" or "M2" pin on the DFRobot Board
 
 
