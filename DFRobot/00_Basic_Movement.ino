@@ -25,7 +25,7 @@ Serial.println("Forwards");
 digitalWrite(DirectionPin,HIGH);
 digitalWrite(EnablePin, HIGH);
 
-delay(2000);
+delay(1000);
 
 //FREESTOP -- just don't enable
 Serial.println("Freestop");
@@ -39,13 +39,13 @@ Serial.println("Backwards");
 digitalWrite(DirectionPin,LOW);
 digitalWrite(EnablePin, HIGH);
 
-delay(2000);
+delay(3000);
 
 //FREESTOP AGAIN
 Serial.println("Freestop");
 digitalWrite(EnablePin, LOW);
 
-delay(2000);
+delay(1000);
 
 
 }
