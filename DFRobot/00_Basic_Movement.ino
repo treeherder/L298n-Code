@@ -6,8 +6,8 @@ This is just for one side
 
 //PINS just 
 
-EnablePin = 9;
-DirectionPin = 10;
+int EnablePin = 9;
+int DirectionPin = 10;
 
 
 void setup () {
@@ -39,7 +39,7 @@ Serial.println("Backwards");
 digitalWrite(DirectionPin,LOW);
 digitalWrite(EnablePin, HIGH);
 
-delay(2000);=
+delay(2000);
 
 //FREESTOP AGAIN
 Serial.println("Freestop");
