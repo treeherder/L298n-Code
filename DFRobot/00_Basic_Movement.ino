@@ -43,6 +43,7 @@ delay(2000);
 
 //FREESTOP AGAIN
 Serial.println("Freestop");
+digitalWrite(EnablePin, LOW);
 
 delay(2000);
 
