@@ -1,53 +1,67 @@
 /*
-This code demonstrates how to move a motor forward, backward, and free stop
-
-This is just for one side
+simple code to manipulate motors
 */
 
-//PINS just 
+int enable_r_one = 7;  //on each driver, we have bridged the outputs
+int enable_r_two = 8;  //
 
-(You may need to purchase some M-F Connectors to connect to the board's headers)
-
-int EnablePin = 9;  // This is the "E1" or "E2" pin on the DFRobot Board 
-int DirectionPin = 10; //this is the "M1" or "M2" pin on the DFRobot Board
-
+int enable_l_one = 9;
+int enable_l_two = 10;
+int r_dir_one = 11; 
+int l_dir_one = 12; 
+int r_dir_two = 13
+int l_dir_two = 14
 
 void setup () {
-Serial.begin(9600);
 
-pinMode(EnablePin, OUTPUT);
-pinMode(DirectionPin, OUTPUT);
+pinMode(enable_r_one, OUTPUT);
+pinMode(enable_r_two, OUTPUT);
+
+pinMode(enable_l_one, OUTPUT);
+pinMode(enable_l_two, OUTPUT);
+
+pinMode(r_dir_one, OUTPUT);
+pinMode(l_dir_one, OUTPUT);
+
+pinMode(r_dir_two, OUTPUT);
+pinMode(l_dir_two, OUTPUT);
+
+}
+void loop(){
+
+//put control here	
 
 }
 
-void loop () {
+int forward(int speed, int time){
+digitalWrite(r_dir_one, HIGH)
+digitalWrite(l_dir_one, LOW)
+digitalWrite(r_dir_two, LOW)
+digitalWrite(l_dir_two, HIGH)
 
-//FORWARDS -- first set direction, then enable
-Serial.println("Forwards");
-digitalWrite(DirectionPin,HIGH);
-digitalWrite(EnablePin, HIGH);
+analogWrite(enable_r_one, speed)
+analogWrite(enable_r_two, speed)
+analogWrite(enable_l_one, speed)
+analogWrite(enable_l_two, speed)
 
-delay(1000);
-
-//FREESTOP -- just don't enable
-Serial.println("Freestop");
-digitalWrite(EnablePin, LOW);
-
-delay(2000);
-
-
-//BACKWARDS -- remember, first set direction, then enable
-Serial.println("Backwards");
-digitalWrite(DirectionPin,LOW);
-digitalWrite(EnablePin, HIGH);
-
-delay(3000);
-
-//FREESTOP AGAIN
-Serial.println("Freestop");
-digitalWrite(EnablePin, LOW);
-
-delay(1000);
-
-
+delay(time);
+return 1;
 }
+
+int backward(int speed, int time){
+digitalWrite(r_dir_one, LOW)
+digitalWrite(l_dir_one, HIGH)
+digitalWrite(r_dir_two, HIGH)
+digitalWrite(l_dir_two, LOW)
+
+
+
+analogWrite(enable_r_one, speed)
+analogWrite(enable_r_two, speed)
+analogWrite(enable_l_one, speed)
+analogWrite(enable_l_two, speed)
+
+delay(time);
+return 1;
+}
+
