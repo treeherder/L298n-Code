@@ -12,6 +12,47 @@
 #define C1 A0
 #define C2 A1
 
+
+static const uint8_t enable(){
+      digitalWrite(EN1A,HIGH);
+      digitalWrite(EN1B,HIGH);
+      digitalWrite(EN2A,HIGH);
+      digitalWrite(EN2B,HIGH);
+}
+
+static const uint8_t thrust(char* dir){
+      if(dir=="fwd"){
+        digitalWrite(M1A,HIGH);
+        digitalWrite(M1B,HIGH);
+        digitalWrite(M2A,LOW);
+        digitalWrite(M2B,LOW);
+        }
+      if(dir=="rvs"){
+        digitalWrite(M1A,LOW);
+        digitalWrite(M1B,LOW);
+        digitalWrite(M2A,HIGH);
+        digitalWrite(M2B,HIGH);
+        }        
+      if(dir=="rgt"){
+        digitalWrite(M1A,LOW);
+        digitalWrite(M1B,LOW);
+        digitalWrite(M2A,LOW);
+        digitalWrite(M2B,LOW);
+        }      
+      if(dir=="lft"){
+        digitalWrite(M1A,HIGH);
+        digitalWrite(M1B,HIGH);
+        digitalWrite(M2A,HIGH);
+        digitalWrite(M2B,HIGH); 
+        }
+      if(dir=="stp"){    
+        digitalWrite(EN1A,LOW);  //brake -roll-to-stop
+        digitalWrite(EN1B,LOW); //brake  -roll-to-stop right
+        digitalWrite(EN2A,LOW);  //brake -roll-to-stop left
+        digitalWrite(EN2B,LOW); //brake  -roll-to-stop left
+        } 
+}  
+      
 void setup()
 {
 
@@ -36,22 +77,17 @@ struct ret
     //quadrature encoder data can come in here
     //accelerometer data?
     };
-struct ret *fwd_val;
-struct ret *stp_val;
-struct ret *rvs_val;
+static struct ret *fwd_val;
+static struct ret *stp_val;
+static struct ret *rvs_val;
 
 uint8_t forward()
   {
+      enable();
+      thrust("fwd");
       struct ret ret_val;
       fwd_val = &ret_val;
-      digitalWrite(M1A,HIGH); //right wheel channel 1
-      digitalWrite(M1B,HIGH); //right wheel channel 2
-      digitalWrite(EN1A,HIGH); //right enable channel 1
-      digitalWrite(EN1B,HIGH); //right enable channel 2
-      digitalWrite(M2A,LOW);   //left wheel channel 1
-      digitalWrite(M2B,LOW);   //left wheel channel 2
-      digitalWrite(EN2A,HIGH); //left enable channel 1
-      digitalWrite(EN2B,HIGH); //left enable channel 2
+
       fwd_val->c_1 = analogRead(C1);
       fwd_val->c_2 = analogRead(C2); // check current for both wheels
   
@@ -60,12 +96,12 @@ uint8_t forward()
  
 uint8_t stop()
   {
+       
       struct ret ret_val;
       stp_val = &ret_val;
-      digitalWrite(EN1A,LOW);  //brake -roll-to-stop
-      digitalWrite(EN1B,LOW); //brake  -roll-to-stop right
-      digitalWrite(EN2A,LOW);  //brake -roll-to-stop left
-      digitalWrite(EN2B,LOW); //brake  -roll-to-stop left
+      enable();
+      thrust("stp");
+      
       stp_val->c_1 = analogRead(C1);
       stp_val->c_2 = analogRead(C2); // check current for both wheels
       return (0);
@@ -77,15 +113,9 @@ uint8_t reverse()
       struct ret ret_val;
       rvs_val = &ret_val;
       //right wheel channel 1
-      digitalWrite(M1B,LOW); //right wheel channel 2
-      digitalWrite(EN1A,HIGH); //right enable channel 1
-      digitalWrite(EN1B,HIGH); //right enable channel 2
-      digitalWrite(M2A,HIGH);   //left wheel channel 1
-      digitalWrite(M2B,HIGH);   //left wheel channel 2
-      digitalWrite(EN2A,HIGH); //left enable channel 1
-      digitalWrite(EN2B,HIGH); //left enable channel 2
-      Serial.println(analogRead(C1)); // check current for right wheel
-      Serial.println(analogRead(C2)); // check current for left  wheel
+      enable();
+      thrust("rvs");
+      
       rvs_val->c_1 = analogRead(C1);
       rvs_val->c_2 = analogRead(C2); // check current for both wheels
       return (0);
